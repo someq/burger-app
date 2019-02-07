@@ -2,7 +2,13 @@ import React from 'react';
 
 
 function Ingredient(props) {
-    return <div className={props.className}/>;
+    let pieces = [];
+
+    for (let i = 0; i < props.ingredient.amount; i++) {
+        pieces.push(<div className={props.ingredient.className} key={i}/>)
+    }
+
+    return pieces;
 }
 
 
