@@ -92,6 +92,14 @@
     border-radius: 15px;
 }
 
+.Chicken {
+    width: 80%;
+    height: 8%;
+    background: linear-gradient(#efbb55, #e5a344);
+    margin: 2% auto;
+    border-radius: 15px;
+}
+
 .Cheese {
     width: 90%;
     height: 4.5%;
@@ -155,4 +163,10 @@
 
 .total {
     text-align: center;
+}
+
+.form-control span {
+    width: 75px;
+    padding: 0 5px;
+    display: inline-block;
 }
