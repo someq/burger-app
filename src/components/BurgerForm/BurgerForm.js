@@ -1,5 +1,7 @@
 import React from 'react';
 import OrderButton from './OrderButton/OrderButton';
+import Modal from '../UI/Modal/Modal';
+import OrderSummary from "./OrderSummary/OrderSummary";
 
 
 function BurgerForm(props) {
@@ -9,6 +11,12 @@ function BurgerForm(props) {
             {props.children}
         </div>
         <OrderButton disabled={!props.isPurchasable}/>
+        <Modal>
+            <OrderSummary
+                ingredients={props.ingredients}
+                price={props.total}
+            />
+        </Modal>
     </div>
 }
 

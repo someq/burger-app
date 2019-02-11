@@ -143,7 +143,11 @@ class App extends Component {
                 <Burger>
                     {this.state.ingredients.map(item => <Ingredient ingredient={item} key={item.name}/>)}
                 </Burger>
-                <BurgerForm total={this.getTotal()} isPurchasable={this.state.isPurchasable}>
+                <BurgerForm
+                    total={this.getTotal()}
+                    isPurchasable={this.state.isPurchasable}
+                    ingredients={this.state.ingredients}
+                >
                     {this.state.ingredients.map(item => <IngredientControl ingredient={item} key={item.name}
                                                                            changeIngredient={this.changeIngredient}/>)}
                 </BurgerForm>
