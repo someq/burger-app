@@ -1,4 +1,5 @@
 import React from 'react';
+import OrderButton from './OrderButton/OrderButton';
 
 
 function BurgerForm(props) {
@@ -7,6 +8,7 @@ function BurgerForm(props) {
         <div>
             {props.children}
         </div>
+        <OrderButton/>
     </div>
 }
 
