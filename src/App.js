@@ -4,6 +4,10 @@ import Burger from './components/Burger/Burger';
 import Ingredient from "./components/Burger/Ingredient/Ingredient";
 import BurgerForm from "./components/BurgerForm/BurgerForm";
 import IngredientControl from "./components/BurgerForm/IngredientControl/IngredientControl";
+import Order from "./components/Order/Order";
+import OrderButton from './components/Order/OrderButton/OrderButton';
+import OrderSummary from "./components/Order/OrderSummary/OrderSummary";
+import Modal from "./components/UI/Modal/Modal";
 
 
 // список доступных ингредиентов
@@ -81,7 +85,7 @@ class App extends Component {
         ingredient.amount += amount;
         // если итоговое количество упало ниже нуля, то делаем его нулём.
         // бургер с отрицательным количеством ингредиентов в природе не существует.
-        if(ingredient.amount < 0) ingredient.amount = 0;
+        if (ingredient.amount < 0) ingredient.amount = 0;
         // пересчитываем итоговую цену за этот ингредиент.
         ingredient.total = ingredient.amount * ingredient.price;
 
@@ -157,18 +161,21 @@ class App extends Component {
                 <Burger>
                     {this.state.ingredients.map(item => <Ingredient ingredient={item} key={item.name}/>)}
                 </Burger>
-                <BurgerForm
-                    total={this.getTotal()}
-                    isPurchasable={this.state.isPurchasable}
-                    ingredients={this.state.ingredients}
-                    purchasing={this.state.purchasing}
-                    purchaseHandler={this.purchaseHandler}
-                    cancelHandler={this.cancelHandler}
-                    successHandler={this.successHandler}
-                >
+                <BurgerForm total={this.getTotal()}>
                     {this.state.ingredients.map(item => <IngredientControl ingredient={item} key={item.name}
                                                                            changeIngredient={this.changeIngredient}/>)}
                 </BurgerForm>
+                <Order>
+                    <OrderButton disabled={!this.state.isPurchasable} click={this.purchaseHandler}/>
+                    <Modal show={this.state.purchasing} cancel={this.cancelHandler}>
+                        <OrderSummary
+                            ingredients={this.state.ingredients}
+                            price={this.getTotal()}
+                            purchaseContinue={this.successHandler}
+                            purchaseCancel={this.cancelHandler}
+                        />
+                    </Modal>
+                </Order>
             </div>
         );
     }

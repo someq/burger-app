@@ -194,6 +194,10 @@
     }
 }
 
+.Order {
+    margin-top: 10px;
+}
+
 .panel {
     background: #bc581e;
     padding: 5px;
