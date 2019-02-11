@@ -11,6 +11,13 @@
     top: 50%;
     box-sizing: border-box;
     transition: all 0.3s ease-out;
+    transform: translate(0, -100vh);
+    opacity: 0;
+}
+
+.Modal-show {
+    transform: translateY(-50%);
+    opacity: 1;
 }
 
 @media (min-width: 600px) {

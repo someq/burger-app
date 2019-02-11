@@ -6,13 +6,7 @@ import Backdrop from "../Backdrop/Backdrop";
 const Modal = props => (
     <div>
         <Backdrop show={props.show} cancel={props.cancel}/>
-        <div
-            className="Modal"
-            style={{
-                transform: props.show ? 'translateY(-50%)' : 'translateY(-100vh)',
-                opacity: props.show ? '1' : '0'
-            }}
-        >
+        <div className={"Modal" + (props.show ? ' Modal-show' : '')}>
             {props.children}
         </div>
     </div>
