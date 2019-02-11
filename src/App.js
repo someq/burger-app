@@ -65,10 +65,11 @@ class App extends Component {
 
         // сортируем ингредиенты бургера в том порядке, в каком они лежат в бургере
         // ингредиенты, которые в бургере лежат выше, в массиве должны быть в начале
-        this.state.ingredients.sort((first, last) => first.order - last.order)
+        this.state.ingredients.sort((first, last) => first.order - last.order);
 
         this.state.isPurchasable = true;
         this.state.purchasing = false;
+        this.state.total = this.getTotal(this.state.ingredients);
     }
 
     // Бонус 2 - общий метод для изменения количества ингредиента вместо addIngredient и removeIngredient.
@@ -102,6 +103,7 @@ class App extends Component {
 
         // this.updatePurchasableState(state);
         this.updatePurchasableState(ingredients);
+        this.updateTotalState(ingredients);
     };
 
     // updatePurchasableState = (state) => {
@@ -136,7 +138,12 @@ class App extends Component {
         this.cancelHandler();
     };
 
-    getTotal = () => {
+    updateTotalState = (ingredients) => {
+        const total = this.getTotal(ingredients);
+        this.setState({total: total});
+    };
+
+    getTotal = (ingredients) => {
         // подсчёт общей суммы в цикле
         // let total = BREAD_PRICE;
         // for(let i = 0; i < this.state.ingredients.length; i++) {
@@ -145,7 +152,7 @@ class App extends Component {
         // return total;
 
         // аналогичный подсчёт с помощью функции массива reduce:
-        return this.state.ingredients.reduce(
+        return ingredients.reduce(
             (total, ingredient) => total + ingredient.total,
             BREAD_PRICE
         );
@@ -161,7 +168,7 @@ class App extends Component {
                 <Burger>
                     {this.state.ingredients.map(item => <Ingredient ingredient={item} key={item.name}/>)}
                 </Burger>
-                <BurgerForm total={this.getTotal()}>
+                <BurgerForm total={this.state.total}>
                     {this.state.ingredients.map(item => <IngredientControl ingredient={item} key={item.name}
                                                                            changeIngredient={this.changeIngredient}/>)}
                 </BurgerForm>
@@ -170,7 +177,7 @@ class App extends Component {
                     <Modal show={this.state.purchasing} cancel={this.cancelHandler}>
                         <OrderSummary
                             ingredients={this.state.ingredients}
-                            price={this.getTotal()}
+                            price={this.state.total}
                             purchaseContinue={this.successHandler}
                             purchaseCancel={this.cancelHandler}
                         />
