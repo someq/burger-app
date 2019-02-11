@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
 import './App.css';
 import Burger from './components/Burger/Burger';
-import Ingredient from "./components/Burger/Ingredient/Ingredient";
 import BurgerForm from "./components/BurgerForm/BurgerForm";
-import IngredientControl from "./components/BurgerForm/IngredientControl/IngredientControl";
 import Order from "./components/Order/Order";
-import OrderButton from './components/Order/OrderButton/OrderButton';
-import OrderSummary from "./components/Order/OrderSummary/OrderSummary";
-import Modal from "./components/UI/Modal/Modal";
 
 
 // список доступных ингредиентов
@@ -67,7 +62,7 @@ class App extends Component {
         // ингредиенты, которые в бургере лежат выше, в массиве должны быть в начале
         this.state.ingredients.sort((first, last) => first.order - last.order);
 
-        this.state.isPurchasable = true;
+        this.state.purchasable = true;
         this.state.purchasing = false;
         this.state.total = this.getTotal(this.state.ingredients);
     }
@@ -122,7 +117,7 @@ class App extends Component {
             (sum, ingredient) => sum + ingredient.amount,
             0
         );
-        this.setState({isPurchasable: count > 0})
+        this.setState({purchasable: count > 0})
     };
 
     purchaseHandler = () => {
@@ -161,28 +156,21 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                {/* вывод компонентов {Ingredient} и {IngredientControl} */}
-                {/* через props.children компонентов {Burger} и {BurgerForm} соответственно. */}
-                {/* это позволяет не передавать state через props (список ингредиентов), */}
-                {/* и т.о. упрощает логику компонентов {Burger} и {BurgerForm}. */}
-                <Burger>
-                    {this.state.ingredients.map(item => <Ingredient ingredient={item} key={item.name}/>)}
-                </Burger>
-                <BurgerForm total={this.state.total}>
-                    {this.state.ingredients.map(item => <IngredientControl ingredient={item} key={item.name}
-                                                                           changeIngredient={this.changeIngredient}/>)}
-                </BurgerForm>
-                <Order>
-                    <OrderButton disabled={!this.state.isPurchasable} click={this.purchaseHandler}/>
-                    <Modal show={this.state.purchasing} cancel={this.cancelHandler}>
-                        <OrderSummary
-                            ingredients={this.state.ingredients}
-                            price={this.state.total}
-                            purchaseContinue={this.successHandler}
-                            purchaseCancel={this.cancelHandler}
-                        />
-                    </Modal>
-                </Order>
+                <Burger ingredients={this.state.ingredients}/>
+                <BurgerForm
+                    total={this.state.total}
+                    ingredients={this.state.ingredients}
+                    changeIngredient={this.changeIngredient}
+                />
+                <Order
+                    purchasable={this.state.purchasable}
+                    purchaseHandler={this.purchaseHandler}
+                    purchasing={this.state.purchasing}
+                    ingredients={this.state.ingredients}
+                    total={this.state.total}
+                    cancelHandler={this.cancelHandler}
+                    successHandler={this.successHandler}
+                />
             </div>
         );
     }

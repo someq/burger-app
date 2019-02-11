@@ -1,4 +1,5 @@
 import React from 'react';
+import Ingredient from "./Ingredient/Ingredient";
 
 
 function Burger(props) {
@@ -7,7 +8,7 @@ function Burger(props) {
             <div className="Seeds1"/>
             <div className="Seeds2"/>
         </div>
-        {props.children}
+        {props.ingredients.map(item => <Ingredient ingredient={item} key={item.name}/>)}
         <div className="BreadBottom"/>
     </div>
 }
