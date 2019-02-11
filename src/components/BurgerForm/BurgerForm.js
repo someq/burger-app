@@ -8,7 +8,7 @@ function BurgerForm(props) {
         <div>
             {props.children}
         </div>
-        <OrderButton/>
+        <OrderButton disabled={!props.isPurchasable}/>
     </div>
 }
 

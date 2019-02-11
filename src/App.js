@@ -62,6 +62,8 @@ class App extends Component {
         // сортируем ингредиенты бургера в том порядке, в каком они лежат в бургере
         // ингредиенты, которые в бургере лежат выше, в массиве должны быть в начале
         this.state.ingredients.sort((first, last) => first.order - last.order)
+
+        this.state.isPurchasable = true;
     }
 
     // Бонус 2 - общий метод для изменения количества ингредиента вместо addIngredient и removeIngredient.
@@ -92,6 +94,28 @@ class App extends Component {
 
         // заменяем state на новый, чтобы изменения появились на странице.
         this.setState(state);
+
+        // this.updatePurchasableState(state);
+        this.updatePurchasableState(ingredients);
+    };
+
+    // updatePurchasableState = (state) => {
+    //     const count = state.ingredients.reduce(
+    //         (sum, ingredient) => sum + ingredient.amount,
+    //         0
+    //     );
+    //     this.setState({
+    //         ...state,
+    //         isPurchasable: count > 0
+    //     })
+    // };
+
+    updatePurchasableState = (ingredients) => {
+        const count = ingredients.reduce(
+            (sum, ingredient) => sum + ingredient.amount,
+            0
+        );
+        this.setState({isPurchasable: count > 0})
     };
 
     getTotal = () => {
@@ -119,7 +143,7 @@ class App extends Component {
                 <Burger>
                     {this.state.ingredients.map(item => <Ingredient ingredient={item} key={item.name}/>)}
                 </Burger>
-                <BurgerForm total={this.getTotal()}>
+                <BurgerForm total={this.getTotal()} isPurchasable={this.state.isPurchasable}>
                     {this.state.ingredients.map(item => <IngredientControl ingredient={item} key={item.name}
                                                                            changeIngredient={this.changeIngredient}/>)}
                 </BurgerForm>
