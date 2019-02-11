@@ -127,6 +127,11 @@ class App extends Component {
         this.setState({purchasing: false});
     };
 
+    successHandler = () => {
+        alert('You decided to continue!');
+        this.cancelHandler();
+    };
+
     getTotal = () => {
         // подсчёт общей суммы в цикле
         // let total = BREAD_PRICE;
@@ -159,6 +164,7 @@ class App extends Component {
                     purchasing={this.state.purchasing}
                     purchaseHandler={this.purchaseHandler}
                     cancelHandler={this.cancelHandler}
+                    successHandler={this.successHandler}
                 >
                     {this.state.ingredients.map(item => <IngredientControl ingredient={item} key={item.name}
                                                                            changeIngredient={this.changeIngredient}/>)}

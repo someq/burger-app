@@ -15,6 +15,8 @@ function BurgerForm(props) {
             <OrderSummary
                 ingredients={props.ingredients}
                 price={props.total}
+                purchaseContinue={props.successHandler}
+                purchaseCancel={props.cancelHandler}
             />
         </Modal>
     </div>
