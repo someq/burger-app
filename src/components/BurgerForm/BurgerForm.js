@@ -10,8 +10,8 @@ function BurgerForm(props) {
         <div>
             {props.children}
         </div>
-        <OrderButton disabled={!props.isPurchasable}/>
-        <Modal>
+        <OrderButton disabled={!props.isPurchasable} click={props.purchaseHandler}/>
+        <Modal show={props.purchasing} cancel={props.cancelHandler}>
             <OrderSummary
                 ingredients={props.ingredients}
                 price={props.total}

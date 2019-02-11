@@ -64,6 +64,7 @@ class App extends Component {
         this.state.ingredients.sort((first, last) => first.order - last.order)
 
         this.state.isPurchasable = true;
+        this.state.purchasing = false;
     }
 
     // Бонус 2 - общий метод для изменения количества ингредиента вместо addIngredient и removeIngredient.
@@ -118,6 +119,14 @@ class App extends Component {
         this.setState({isPurchasable: count > 0})
     };
 
+    purchaseHandler = () => {
+        this.setState({purchasing: true});
+    };
+
+    cancelHandler = () => {
+        this.setState({purchasing: false});
+    };
+
     getTotal = () => {
         // подсчёт общей суммы в цикле
         // let total = BREAD_PRICE;
@@ -147,6 +156,9 @@ class App extends Component {
                     total={this.getTotal()}
                     isPurchasable={this.state.isPurchasable}
                     ingredients={this.state.ingredients}
+                    purchasing={this.state.purchasing}
+                    purchaseHandler={this.purchaseHandler}
+                    cancelHandler={this.cancelHandler}
                 >
                     {this.state.ingredients.map(item => <IngredientControl ingredient={item} key={item.name}
                                                                            changeIngredient={this.changeIngredient}/>)}

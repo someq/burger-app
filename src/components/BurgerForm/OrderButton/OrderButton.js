@@ -2,7 +2,11 @@ import React from 'react';
 
 
 function OrderButton(props) {
-    return <button className="OrderButton" disabled={props.disabled}>ORDER NOW</button>
+    return <button
+        className="OrderButton"
+        disabled={props.disabled}
+        onClick={props.click}
+    >ORDER NOW</button>
 }
 
 
