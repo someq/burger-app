@@ -3,16 +3,34 @@ import CheckoutSummary from "../../components/CheckoutSummary/CheckoutSummary";
 
 
 class Checkout extends Component {
-  state = {
-    ingredients: [
-        {name: 'cheese', price: 20, label: 'Сыр', className: 'Cheese', order: 30, amount: 2, total: 40},
-        {name: 'meat', price: 35, label: 'Мясо', className: 'Meat', order: 50, amount: 1, total: 35},
-    ]
-  };
+    state = {
+        ingredients: []
+    };
 
-  render() {
-    return <CheckoutSummary ingredients={this.state.ingredients} />;
-  }
+    componentDidMount() {
+        // Создаём объект URLSearchParams из строки запроса.
+        // При создании этот объект декодирует и распасит строку,
+        // благодаря чему можно будет обращаться к отдельным параметрам запроса.
+        const query = new URLSearchParams(this.props.location.search);
+
+        // Далее из этого объекта можно получить список параметров запроса (query.entries()),
+        // каждый из которых представляет собой пару [ключ, значение] (переменная param).
+        const ingredients = [];
+        for (let param of query.entries()) {
+            ingredients[param[0]] = JSON.parse(param[1]);
+        }
+        this.setState({ingredients: ingredients});
+    }
+
+    render() {
+        return <div>
+            <CheckoutSummary
+                ingredients={this.state.ingredients}
+                checkoutCancelled={this.checkoutCancelledHandler}
+                checkoutContinued={this.checkoutContinuedHandler}
+            />
+        </div>;
+    }
 }
 
 export default Checkout;
