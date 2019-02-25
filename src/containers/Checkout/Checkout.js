@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import CheckoutSummary from "../../components/CheckoutSummary/CheckoutSummary";
+import {Route} from "react-router-dom";
+import ContactData from "../ContactData/ContactData";
 
 
 class Checkout extends Component {
@@ -22,12 +24,33 @@ class Checkout extends Component {
         this.setState({ingredients: ingredients});
     }
 
+    checkoutCancelledHandler = () => {
+        // возврат назад, на преыдущую "страницу".
+        this.props.history.goBack();
+    };
+
+    checkoutContinuedHandler = () => {
+        // замена текущего пути в истории на новый.
+        // текущий путь при этом не сохраняется в истории, поэтому
+        // возврат назад будет вести на ту же "страницу", что и до замены.
+        this.props.history.replace('/checkout/contact-data');
+    };
+
     render() {
         return <div>
             <CheckoutSummary
                 ingredients={this.state.ingredients}
                 checkoutCancelled={this.checkoutCancelledHandler}
                 checkoutContinued={this.checkoutContinuedHandler}
+            />
+
+            {/* пример "вложенного" Route - когда Route находится не в роутере, */}
+            {/* а в другом контейнере, который находится в одном из роутов роутера. */}
+            {/* match - это свойство, передаваемое из роутера, которое содержит путь целиком */}
+            {/* и его отдельные части, которые совпали с path открытой страницы. */}
+            <Route
+                path={this.props.match.path + '/contact-data'}
+                render={(props) => (<ContactData ingredients={this.state.ingredients}/>)}
             />
         </div>;
     }
