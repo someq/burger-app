@@ -1,0 +1,15 @@
+.nav-link {
+    display: inline-block;
+    background: #bc581e;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    background: #228c1d;
+}
